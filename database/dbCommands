@@ -1,0 +1,2 @@
+export: sudo mongoexport --db mydb -c subjects --out subjects.json
+import: sudo mongoimport --db mydb -c subjects --file subjects.json

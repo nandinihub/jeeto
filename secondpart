@@ -1,0 +1,366 @@
+   // timeToLive: Number,
+        // mutable_content: false,
+        // restricted_package_name: "",
+        // dry_run: ""
+      }
+      var notificationData = {
+        title: payload.notification.title,
+        body: payload.notification.body,
+        date: Date.parse(Date()),
+        formatDate: Date().substring(0,15)
+        }
+
+        var myData = new Notifications(notificationData);
+        admin.messaging().sendToDevice(token,payload,options)
+        .then(() => {
+            console.log(notificationData);
+            myData.save()
+            .then(() => {
+                console.log("saved");
+            })
+            .catch(() => {
+                console.log("Not saved");
+            })
+        })
+        .catch((error)=>{
+            console.log("Error Info:",error)
+        })
+    })
+})
+
+//----------------------------------------------------------
+
+//--------------Notifications Data API----------------------
+
+app.get("/v1/notifications",verifyAccessToken,(req,res) => {
+    if(req.headers['authorization']!== null) {
+        Notifications.find({},'-_id title body date formatDate')
+        .sort({date:-1})
+        .limit(10)
+        .exec((err,result) => {
+            if(err) res.status(400).json({
+                status:400,
+                success:false,
+                message:"No notification data available",
+                data:{}
+            });
+            else res.status(200).json({
+                status:200,
+                success:true,
+                message:"Notification data",
+                data:result
+            });
+        })
+    }
+    else
+    res.status(400).json({
+        status:400,
+        success:false,
+        message:"No notification data available",
+        data:{}
+    });
+})
+
+//-----------------------------------------------------------
+
+//----------------Change Password----------------------------
+
+var changeSchema = new mongoose.Schema({
+    _id: Number,
+    oldPassword: String,
+    newPassword: String,
+    password: String
+});
+
+var change = mongoose.model("Change", changeSchema,"users");
+
+app.post("/v1/user/change-password",verifyAccessToken, (req,res) => {
+    if(req.headers['authorization']!== null) {
+        var datas = JSON.parse(JSON.stringify(req.body));
+        change.findOne({ _id:datas._id}).select('-_id password').exec((err, docs) => {
+            if (err) {
+                res.status(400).json({
+                    status:400,
+                    success:false,
+                    message:"User not found",
+                    data:{}
+                });
+            }
+            else {
+                console.log('Password update block');
+
+                var oldPassword = docs.password;
+
+                var userOldPassword = datas.oldPassword;
+                var cipherPassword = crypto.createCipher('aes-128-cbc', 'mypassword');
+                var password = cipherPassword.update(userOldPassword, 'utf8', 'hex')
+                password += cipherPassword.final('hex');
+
+                var userNewPassword = datas.newPassword;
+                var cipherPassword = crypto.createCipher('aes-128-cbc', 'mypassword');
+                var newPassword = cipherPassword.update(userNewPassword, 'utf8', 'hex')
+                newPassword += cipherPassword.final('hex');
+
+                if( oldPassword == password ) {
+                    var filter = { _id: datas._id };
+                    var update = { password : newPassword };
+                    change.findOneAndUpdate(filter,update,(err,docs) => {
+                        if(docs) res.status(200).json({
+                            status:200,
+                            success:true, 
+                            message:"Password updated successfully",
+                            data:{}
+                        })
+                        else res.status(400).json({
+                            status:400, 
+                            success:false, 
+                            message:"Error changing password",
+                            data:{}
+                        });
+                    });
+                }
+                else res.status(400).json({
+                    status:400, 
+                    success:false, 
+                    message:"Incorrect old password",
+                    data:{}
+                });
+            }
+        })
+    }
+    else
+    res.status(400).json({
+        status:400, 
+        success:false, 
+        message:"Incorrect old password",
+        data:{}
+    });
+});
+
+//----------------------------------------------------------
+
+//-------------------Winner List API------------------------
+
+const sortSchema = new mongoose.Schema({
+    _id: Number,
+    userId: {
+      type: mongoose.Schema.Types.Number,
+      ref: "Signup",
+    },
+    contestId: Number,
+    contestTime: Number,
+    correctAnswer: Number,
+    answerTime: SchemaTypes.Double,
+    firstName: String,
+    date: Number,
+  });
+  var Sorting = mongoose.model("sorting", sortSchema, "resultData");
+
+function getWinnerList(contestSlot, startDateFormated, endDateFormated) {
+    return new Promise((resolve) => {
+      let startDate = +new Date(
+        startDateFormated
+      );
+      let endDate = +new Date(endDateFormated);
+
+        Sorting.find({
+            correctAnswer: 5,
+            contestTime: { $gte: startDate, $lte: endDate },
+            contestId: contestSlot,
+        })
+        .populate({ path: "userId", select: "firstName lastName image" })
+        .sort({ answerTime: 1 })
+        .limit(3)
+        .exec(function (err, winner) {
+         
+          if (err) {
+            console.log("Hey, i am in error-->", err);
+            return resolve([]);
+          }
+          const obj = JSON.parse(JSON.stringify(winner));
+          var result = [];
+          for (var i = 0; i <= winner.length - 1; i++) {
+            var conversionToHours = new Date(obj[i].contestTime);
+            var date = conversionToHours.toLocaleDateString("en-GB");
+           
+            var objs = {
+              _id: obj[i].userId._id,
+              firstName: obj[i].userId.firstName,
+              lastName: obj[i].userId.lastName,
+              image: obj[i].userId.image,
+              contestTime: obj[i].contestTime,
+              contestId: obj[i].contestId,
+              answerTime: obj[i].answerTime,
+              date: date,
+            };
+            result.push(objs);
+            
+          }
+          return resolve(result);
+        });
+    });
+}
+
+app.get("/v1/winnerlist",verifyAccessToken, async (req, res) => {
+    if(req.headers['authorization']!== null) {
+        var finalWinnerList = [];
+        for (let i = 0; i < 15; i++) {
+        let startDate = moment().format("YYYY-MM-DD 00:00:00"),
+            endDate = moment().format("YYYY-MM-DD 23:59:59");
+        if (i > 0) {
+            startDate = moment().subtract(i, 'days').format("YYYY-MM-DD 00:00:00");
+            endDate = moment().subtract(i, 'days').format("YYYY-MM-DD 23:59:59");
+        }
+        let [data1, data2, data3, data4, data5] = await Promise.all([
+            getWinnerList(10, startDate, endDate),
+            getWinnerList(12, startDate, endDate),
+            getWinnerList(2, startDate, endDate),
+            getWinnerList(4, startDate, endDate),
+            getWinnerList(7, startDate, endDate)])
+        finalWinnerList = [...finalWinnerList, ...data1, ...data2, ...data3, ...data4, ...data5]
+        }
+        if(finalWinnerList == null) {
+            res.status(400).json({
+                status:400, 
+                success:false, 
+                message:"No winner list data",
+                data:{}
+            });    
+        }
+        else res.status(200).json({
+            status:200, 
+            success:true, 
+            message:"Winner list data",
+            data:finalWinnerList
+        });
+
+        const countOfElements = collect(finalWinnerList);
+        const total = countOfElements.count();
+        console.log("the no.of element are----->" + total);
+
+        if (total == 225){
+        Sorting.db.dropCollection(('contest'),(collection)=>{
+            console.log("Collection is deleted!");
+        });
+        }
+    }
+    else
+    res.status(400).json({
+        status:400, 
+        success:false, 
+        message:"No winner list data",
+        data:{}
+    });
+});
+//-------------------------------------------------------------
+
+//----------------------Play once API----------------------
+
+const playerSchema = new mongoose.Schema({
+    _id: Number,
+    contestSlot: Number,
+    contestDate : Number
+})
+
+const myModel = mongoose.model("myModel", playerSchema, "newplayerId")
+
+app.post("/v1/recheck", (req, res) => {
+    let startDate = moment(req.body.contestDate).format("YYYY-MM-DD 00:00:00");
+    endDate = moment().format("YYYY-MM-DD 23:59:59");
+    Result.find({
+        contestId: req.body.contestSlot,
+        userId: req.body._id,
+        contestTime: { $gte: + new Date(startDate), $lte: + new Date(endDate) },
+    })
+        .exec((err,resultData) => {
+            console.log("resultData------->", resultData);
+            if(err){
+                return res.status(400).json({
+                    status: 400,
+                    success: false,
+                    message:"Bad Request",
+                    data:{}
+                })
+            }
+            if (resultData && resultData.length > 0) {
+                return res.status(200).json({
+                    status:200,
+                    success: true,
+                    message:"Player has already played the game.",
+                    data:{}
+                })
+
+            } else {
+                return res.status(200).json({
+                    status:200,
+                    success: true,
+                    message:"Player hasn't played the game. Please show the questions.",
+                    data:{}
+                })
+            }
+        })
+})
+
+//------------------------------------------------------
+
+//----------------------Game Rules----------------------
+
+const rulesSchema = new mongoose.Schema({
+    _id : Number,
+    rule : String
+});
+const GameRules = mongoose.model("gameRules", rulesSchema, "rules");
+
+app.get("/v1/rules", (req,res)=>{
+    
+    GameRules.find({}, function(err, result){
+        if (err) res.status(400).json({
+            status:400,
+            success:false,
+            message:"Error in displaying rules",
+            data:{}
+        });
+        else res.status(200).json({
+            status:200,
+            success:true,
+            message:"Game Rules",
+            data:result
+        });
+    })
+})
+
+//------------------------------------------------------
+
+//-----------------Terms and Conditions-----------------
+
+const tncSchema = new mongoose.Schema({
+    _id : Number,
+    tnc : String
+});
+
+const TermsNCondition = mongoose.model("TermsNCondition", tncSchema, "tnc");
+
+app.get("/v1/tnc", (req,res)=>{
+    
+    TermsNCondition.find({}, function(err, result){
+        if (err) res.status(400).json({
+            status:400,
+            success:false,
+            message:"Error in displaying terms and conditions ",
+            data:{}
+        });
+        else res.status(200).json({
+            status:200,
+            success:true,
+            message:"Terms and Conditions",
+            data:result
+        });
+    })
+})
+
+app.listen(PORT,ip, (error) => {
+    if(error) throw error;
+    console.log("Server listening on 192.168.1.67:%s ", PORT);
+});
+
+

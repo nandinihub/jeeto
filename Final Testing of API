@@ -1,0 +1,300 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+01. SIGNUP: 192.168.1.68:8080/v1/user/signup
+
+Request- 
+{
+  "firstName": "InstaIT",
+  "lastName": "Tech",
+  "email": "admin@gmail.com",
+  "password": "Insta@123",
+  "dateOfBirth": "11-11-1999",
+  "mobile": "1234567890",
+  "latitude": "12.123456",
+  "longitude": "98.987654",
+  "deviceType": "android",
+  "fcmToken": "token",
+  "model": "vivo",
+  "os": "10"
+}
+
+Response- 
+{
+  "status": 200,
+  "success": true,
+  "message": "Success",
+  "data": {
+    "_id": 75,
+    "firstName": "InstaIT",
+    "lastName": "Tech",
+    "email": "admin@gmail.com"
+  }
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+02. LOGIN: 192.168.1.68:8080/v1/user/login
+
+Request-
+{
+  "email": "admin@gmail.com",
+  "password": "Insta@123"
+}
+
+Response-
+{
+  "status": 202,
+  "success": true,
+  "message": "Login Successful",
+  "data": {
+    "_id": 75,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTY2NzQ3MTkxMiwiZXhwIjoxNjY3NDc1NTEyfQ.RBiAymjXtZSkCe5W26_keHyv0bJ_EydkweDpIRef6Ys",
+    "email": "admin@gmail.com",
+    "firstName": "InstaIT",
+    "lastName": "Tech",
+    "mobile": "1234567890"
+  }
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+03. FORGOT (OTP GENERATE): 192.168.1.68:8080/v1/user/forgot
+
+Request-
+{
+  "email": "admin@gmail.com"
+}
+
+Response-
+{
+  "status": 200,
+  "success": true,
+  "message": "Mail Sent"
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+04. FORGOT (NEW PASSWORD): 192.168.1.68:8080/v1/user/forgot/otp
+
+Request-
+{
+  "email":"admin@gmail.com",
+  "otp":1186,
+  "password":"Insta@123"
+}
+
+Response-
+{
+  "status": 200,
+  "success": true,
+  "message": "Password Updated"
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+05. HOME (SUBJECT LIST): 192.168.1.68:8080/v1/home
+
+Response-
+[
+  {
+    "_id": 1,
+    "sub": "History",
+    "image": "http://192.168.1.68:8080/images/history.jpg"
+  },
+  {
+    "_id": 2,
+    "sub": "Geography",
+    "image": "http://192.168.1.68:8080/images/geography.jpg"
+  },
+  {
+    "_id": 3,
+    "sub": "Sports",
+    "image": "http://192.168.1.68:8080/images/sport.jpg"
+  },
+  {
+    "_id": 4,
+    "sub": "Political Science",
+    "image": "http://192.168.1.68:8080/images/politicalScience.jpg"
+  },
+  {
+    "_id": 5,
+    "sub": "Economics",
+    "image": "http://192.168.1.68:8080/images/economics.jpg"
+  },
+  {
+    "_id": 6,
+    "sub": "Sociology",
+    "image": "http://192.168.1.68:8080/images/sociology.png"
+  },
+  {
+    "_id": 7,
+    "sub": "Environmental Science",
+    "image": "http://192.168.1.68:8080/images/environmentalScience.png"
+  },
+  {
+    "_id": 8,
+    "sub": "General Science",
+    "image": "http://192.168.1.68:8080/images/generalScience.jpeg"
+  }
+]
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+06. QUESTIONS: 192.168.1.68:8080/v1/question
+
+Request-
+{
+  "sub_id": 1
+}
+
+Response-
+[
+  {
+    "_id": 1,
+    "questions": "Which one of the following ancient towns is well known for its elaborate system of water harvesting and management by building a series of dams and channelising water into connected reservoirs?",
+    "option1": "Dholavira",
+    "option2": "Kalibangan",
+    "option3": "Rakhigarhi",
+    "option4": "Ropar"
+  },
+  {
+    "_id": 2,
+    "questions": "With reference to the history of ancient India, Bhavabhuti, Hastimalla and Kshemeshvara were famous",
+    "option1": "Jain monks",
+    "option2": "playrights",
+    "option3": "temple architects",
+    "option4": "philosophers"
+  },
+  {
+    "_id": 3,
+    "questions": "With reference to Indian history, who among the following is a future Buddha, yet to come to save the world?",
+    "option1": "Avalokiteshvara",
+    "option2": "Lokesvara",
+    "option3": "Maitreya",
+    "option4": "Padmapani"
+  },
+  {
+    "_id": 4,
+    "questions": "Which one of the following is not a Harappan site?",
+    "option1": "Chanhudaro",
+    "option2": "Kot Diji",
+    "option3": "Sohgaura",
+    "option4": "Desalpur"
+  },
+  {
+    "_id": 5,
+    "questions": "Which of the following phrases defines the nature of the ‘Hundi’  generally referred to in the sources of the post-Harsha period?",
+    "option1": "An advisory issued by the king to his subordinates",
+    "option2": "A diary to be maintained for daily accounts",
+    "option3": "A bill of exchange",
+    "option4": "An order from the feudal lord to his subordinates"
+  }
+]
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+07. RESULT: 192.168.1.68:8080/v1/question/result
+
+Request-
+{
+  "user_id":4,
+  "sub_id": 1,
+  "question1": 1,
+  "answer1": "Dholavira",
+  "question2": 2,
+  "answer2": "playrights",
+  "question3": 3,
+  "answer3": "Maitreya",
+  "question4": 4,
+  "answer4": "Sohgaura",
+  "question5": 5,
+  "answer5": "A bill of exchange",
+  "contestTime":1667458548406,
+  "contestId":12,
+  "answerTime":12
+}
+
+Response-
+{
+  "status": 200,
+  "success": true,
+  "message": "Result",
+  "data": 5
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+08. VIEW PROFILE: 192.168.1.68:8080/v1/user/profile
+
+Request-
+{
+  "_id":80
+}
+
+Response-
+{
+  "status": 200,
+  "success": true,
+  "message": "User data",
+  "data": {
+    "firstName": "InstaIT",
+    "lastName": "Tech",
+    "email": "admin@gmail.com",
+    "dateOfBirth": "11-11-1999",
+    "mobile": "1234567890",
+    "image": "http://192.168.1.68:8080/uploads/image_picker5673049983468180147.jpg",
+    "about": "JeetoGyanSe Developer"
+  }
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+09. LOGOUT: 192.168.1.68:8080/v1/user/logout
+
+Request-
+{
+  "_id":80
+}
+
+Response-
+{
+  "status": 200,
+  "success": true,
+  "message": "Logout successfully"
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+10. UPDATE PROFILE: 192.168.1.68:8080/v1/user/update
+
+Request-
+{
+  "firstName": "InstaIT",
+  "lastName": "Tech",
+  "dateOfBirth": "11-11-1999",
+  "about": "JeetoGyanSe Developer",
+  "_id": 80,
+  "image": file
+}
+
+Response-
+{
+  "status": 200,
+  "success": true,
+  "message": "Updated"
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+11. NOTIFICATION DATA: 192.168.1.68:8080/v1/notifications
+
+Response-
+[{
+  "title": "Jeeto Gyan Se",
+  "body": "Contest starting soon-19:00",
+  "date": 1667481900000,
+  "formatDate": "Thu Nov 03 2022"
+},{}]
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+12. CHANGE PASSWORD:  192.168.1.68:8080/v1/user/change-password
+
+Request-
+{
+  "_id": 1,
+  "oldPassword": "Insta@1",
+  "newPassword": "Insta@123"
+}
+
+Response-
+{
+  "status": 200,
+  "success": true,
+  "message": "Password updated"
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+13. WINNER LIST: 192.168.1.68:8080/v1/winnerlist
+
+Response- 
+[
+{"_id":64,"firstName":"InstaIT","lastName":"Tech","image":"","contestTime":1667457077145,"contestId":12,"answerTime":6.023,"date":"04/11/2022"}
+,{},{}
+]

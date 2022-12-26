@@ -1,0 +1,8 @@
+{"_id":1,"sub":"History","create":1.66538299e+12,"update":1.66538299e+12,"status":true,"image":"http://192.168.1.68:8080/images/history.jpg"}
+{"_id":2,"sub":"Geography","create":1.66538299e+12,"update":1.66538299e+12,"status":true,"image":"http://192.168.1.68:8080/images/geography.jpg"}
+{"_id":3,"sub":"Sports","create":1.66538299e+12,"update":1.66538299e+12,"status":true,"image":"http://192.168.1.68:8080/images/sport.jpg"}
+{"_id":4,"sub":"Political Science","create":1.66538299e+12,"update":1.66538299e+12,"status":true,"image":"http://192.168.1.68:8080/images/politicalScience.jpg"}
+{"_id":5,"sub":"Economics","create":1.66538299e+12,"update":1.66538299e+12,"status":true,"image":"http://192.168.1.68:8080/images/economics.jpg"}
+{"_id":6,"sub":"Sociology","create":1.66538299e+12,"update":1.66538299e+12,"status":true,"image":"http://192.168.1.68:8080/images/sociology.png"}
+{"_id":7,"sub":"Environmental Science","create":1.66538299e+12,"update":1.66538299e+12,"status":true,"image":"http://192.168.1.68:8080/images/environmentalScience.png"}
+{"_id":8,"sub":"General Science","create":1.66538299e+12,"update":1.66538299e+12,"status":true,"image":"http://192.168.1.68:8080/images/generalScience.jpeg"}

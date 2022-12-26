@@ -1,0 +1,14 @@
+{"_id":{"$oid":"6372190715e66263ea58e2fa"},"user_id":24,"contestId":4,"contestTime":1.668421887114e+12,"answerTime":6.799,"__v":0,"correctAnswer":0}
+{"_id":{"$oid":"63722ab8099de31df91868e9"},"user_id":24,"contestId":4,"contestTime":1.668426421157e+12,"answerTime":1.978,"__v":0,"correctAnswer":0}
+{"_id":{"$oid":"6372343096764ccdb6cfd833"},"user_id":24,"contestId":10,"contestTime":1.66842884653e+12,"answerTime":0.796,"__v":0,"correctAnswer":0}
+{"_id":{"$oid":"63739e541744906fa030b2d7"},"user_id":55,"contestId":10,"contestTime":1.668173904012e+12,"answerTime":9,"__v":0,"correctAnswer":5}
+{"_id":{"$oid":"63739f0e1744906fa030b329"},"user_id":55,"contestId":7,"contestTime":1.668521640889e+12,"answerTime":40.757000000000005,"__v":0,"correctAnswer":0}
+{"_id":{"$oid":"637480b21d63b4894efdff7e"},"user_id":76,"contestId":10,"contestTime":1.6685802e+12,"answerTime":8,"__v":0,"correctAnswer":5}
+{"_id":{"$oid":"6393297a7f9e006d8721360b"},"user_id":76,"contestId":10,"contestTime":1.6685802e+12,"answerTime":8,"__v":0}
+{"_id":{"$oid":"639330cc7f9e006d87213746"},"user_id":76,"contestId":10,"contestTime":1.670590653331e+12,"answerTime":8,"__v":0,"correctAnswer":5}
+{"_id":{"$oid":"6393336a64021c6d8be2814a"},"user_id":55,"contestId":7,"contestTime":1.670591333422e+12,"answerTime":4.091,"__v":0,"correctAnswer":5}
+{"_id":{"$oid":"639333be64021c6d8be2819c"},"user_id":55,"contestId":7,"contestTime":1.670591333422e+12,"answerTime":28.620000000000005,"__v":0}
+{"_id":{"$oid":"6393340164021c6d8be2828d"},"user_id":76,"contestId":7,"contestTime":1.670590653331e+12,"answerTime":8,"__v":0}
+{"_id":{"$oid":"6393343564021c6d8be282de"},"user_id":13,"contestId":7,"contestTime":1.670590653331e+12,"answerTime":9,"__v":0,"correctAnswer":5}
+{"_id":{"$oid":"6396cb5e7ae5170f22a73e49"},"user_id":55,"contestId":12,"contestTime":1.670826843628e+12,"answerTime":1.795,"__v":0,"correctAnswer":5}
+{"_id":{"$oid":"6396cbc07ae5170f22a73e9f"},"user_id":55,"contestId":12,"contestTime":1.670826843628e+12,"answerTime":31.936000000000007,"__v":0}

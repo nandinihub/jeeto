@@ -1,0 +1,8 @@
+{"_id":1,"rule":"Contestants will be provided 8 subjects to choose from i.e., History, Geography, Sports, Political Science, Economics, Sociology, Environmental Science and General Science."}
+{"_id":2,"rule":"Each subject will contain 5 questions."}
+{"_id":3,"rule":"Total time limit of 100 seconds has been given for 5 questions."}
+{"_id":4,"rule":"Crossing the time limit will lead to disqualification."}
+{"_id":5,"rule":"Answering all 5 questions right will only be considered as winner."}
+{"_id":6,"rule":"The lesser the time taken to answer, the more the chances of winning."}
+{"_id":7,"rule":"Only 3 winners whose answer time is the lowest will be shown in winnerlist."}
+{"_id":8,"rule":"If the contestant press 'back' or 'home' or 'recents' buttons in between the game, the contestant will not be allowed to enter the game again in the same slot."}
